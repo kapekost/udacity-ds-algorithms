@@ -7,12 +7,24 @@ class LRU_Cache(object):
         pass
 
     def dequeue(self):
+        """
+        Remove from the cache the item that is first in the list_of_keys
+        Then remove that from the list_of_keys too
+        """
         item_to_delete = self.list_of_keys[0]
         del self.cache[item_to_delete]
         self.list_of_keys.remove(item_to_delete)
         pass
 
     def enqueue(self, key, value):
+        """
+        Add in the cache the key value pare,
+        Add the key at the end of the list_of_keys queue 
+
+        Args:
+        key: the key of the object to store (hash)
+        value: the value to cache
+        """
         index = self.index(key)
         self.cache[index] = value
 
@@ -24,6 +36,16 @@ class LRU_Cache(object):
         pass
 
     def get(self, key):
+        """
+        Get the value of the given key from the cache if it exists
+
+        Args:
+        key: the key of the object to find (hash)
+
+        Returns:
+        the value of the key
+        -1 of the value is not found
+        """
         # Retrieve item from provided key. Return -1 if nonexistent.
         index = self.index(key)
         if index in self.cache:
@@ -32,14 +54,30 @@ class LRU_Cache(object):
         return -1
 
     def index(self, value):
+        """
+        Create a hash for indexing the cache
+        (Not implemented)
+
+        Args:
+        value: the value we want to use for index
+
+        Returns:
+        the same value is returned
+        """
         # Split the hashing of the key to give us more flexibility on how we want to calculate the keys
         hashval = value
         return hashval
 
     def set(self, key, value):
-        # Set the value if the key is not present in the cache.
-        # If the cache is at capacity remove the oldest item.
-        # If the value already exists don't process anthing further
+        """
+        Set the value if the key is not present in the cache.
+        If the cache is at capacity remove the oldest item.
+        If the value already exists don't process anthing further
+
+        Args:
+        key: the key of the object to store (hash)
+        value: the value to cache
+        """
         if(key is None or value is None):
             return
         if self.get(key) == -1:
