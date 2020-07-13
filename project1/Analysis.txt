@@ -1,0 +1,65 @@
+Task 0
+
+The code only gets directly 1 value from the array by key, 2 times
+and we directly print
+The complexity here is 
+Complexity => O(1)
+
+Task 1
+
+Here we loop through 2 input arrays and we perform
+ 2 set insert actions in each O(1)
+ then we print the length (embedded function)
+This should be O(n+m) with n and m the 2 array inputs
+Complexity => O(n)
+
+Task 2
+
++ A for loop going through all the elements O(n)
+- if statement on how to update the secondary array
+- same for loop for the second part of the array
++ max function to get the maximum duration O(n)
+O(n+n)
+
+Complexity => O(n)
+
+Task 3
+
++ For each call: 
+- pick and compare first parts of string to find the originators country
+- again compare string for keeping the callers from and to the country
+- again comparing strings to see if it's fixed landline
+- insert actions
+- string compare for Area code 
+[given the input ti won't be more than 5-6 comparisons 
+maybe less since I start from the third character, assuming the start
+is always "(0",
+so we can keep the low complexity]
+- compare string to see if it's mobile
+- small compare in array of 3 elements 
+- insert 
+- string compare for mobile codes
+
+O(n) up to this point as all the operations between are O(1)
+
++ Sort the array to print  O(nLog(n))
++ For Each code to print: O(n)
+O(n+n+nLog(n)) 
+Complexity => O(nLog(n))
+
+
+Task 4
+
++ Loop through all the calls: O(n)
+- insert for all of them
++ loop through the calls again: O(n)
+- remove some from the previous set
++ loop through texts: O(n)
+- remove from set O(1)
+- remove from set O(1)
+
++ Sort the array to print O(nLog(n))
++ For Each code to print: O(n)
+3n+nLog(n)
+
+Complexity => O(nLog(n))
