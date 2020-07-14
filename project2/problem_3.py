@@ -147,7 +147,7 @@ def huffman_decoding(data, tree):
 
 
 if __name__ == "__main__":
-    test_sentences = ["", None, "'", "The bird is the word", "hello world", "my name is Kostas",
+    test_sentences = ["", None, " ", "'", "The bird is the word", "hello world", "my name is Kostas",
                       "AAAAA0000----", "------098076543!@#$%^&*()** 32456 321@#$%^&^ ##1",
                       "123456789qwertyuiopasdfghjklzxcvbnm"]
     for a_great_sentence in test_sentences:
@@ -171,4 +171,4 @@ if __name__ == "__main__":
         else:
             # The case of 1 character, None or empty string
             assert a_great_sentence in test_sentences[0:
-                                                      3], f"edge case:{a_great_sentence}"
+                                                      4], f"edge case:{a_great_sentence}"
