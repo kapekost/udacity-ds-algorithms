@@ -12,10 +12,12 @@ class Node():
 
 def huffman_encoding(data):
     """
-    Return the encoded string and the encoding Huffman tree.
+    Get the encoded string and the encoding Huffman tree.
 
     Args:
       data(str): the string to encode
+    Returns:
+        The encoded string and the tree to use for decoding
     """
     frequencies = get_frequency_nodes(data)
     tree = merge_min_nodes(frequencies)
@@ -26,11 +28,14 @@ def huffman_encoding(data):
 
 def encode_data(data, huffman_code):
     """
-    Return The encoded data from the huffman code.
+    The encoded data from the huffman code.
 
     Args:
-      user(str): user name/id
-      group(class:Group): group to check user membership against
+      data(str): the string to encode
+      huffman_code(dic): The dictionary with the binary representation
+
+    Returns:
+        The encoded data
     """
     encoded_data = ""
     for char in data:
@@ -40,16 +45,19 @@ def encode_data(data, huffman_code):
 
 def get_huffman_code(node, path, table):
     """
-    Return Get the table of encoding.
+    Get the table of encoding.
 
     Args:
       node(class:Node): the node to start the calculation
-      path([]): the array of steps from root
-      table({}): the [cached] dictionary for the final table
+      path(array): the array of steps from root
+      table(dic): the [cached] dictionary for the final table
+    Returns: 
+        The table dictionary with the binary representation
     """
     current = node
 
     if not current.left and not current.right:
+        # when we reach a leaf we update the table to keep the path of the current Node
         table[current.character] = "".join(path[:])
         path = []
         return table
@@ -64,10 +72,12 @@ def get_huffman_code(node, path, table):
 
 def merge_min_nodes(frequencies):
     """
-    Return a merge of each element to create a huffman tree.
+    Merge of each element to create a huffman tree.
 
     Args:
-      freequencies(classNode): The current tree to merge the 2 smallest nodes
+      frequencies(classNode): The current tree to merge the 2 smallest nodes
+    Returns: 
+        The new tree with the 2 lowest nodes merged
     """
     if(len(frequencies) == 1):
         return frequencies
@@ -86,12 +96,14 @@ def merge_min_nodes(frequencies):
 
 def get_frequency_nodes(data):
     """
-    Return the array of nodes including frequency.
+    Get the nodes with the frequency.
 
     Args:
       data(str): the input string to convert into nodes for the Huffman tree
+    Returns the array of nodes and frequency
     """
     frequency_table = {}
+    sorted_table = []
     frequency_nodes = []
     for char in data:
         if char not in frequency_table:
@@ -99,8 +111,9 @@ def get_frequency_nodes(data):
         else:
             frequency_table[char] += 1
     # create graph with nodes
-    frequency_table = sorted(frequency_table.items(), key=lambda x: x[1])
-    for item in frequency_table:
+    sorted_table = sorted(frequency_table.items(), key=lambda x: x[1])
+    print("sorted:", sorted_table)
+    for item in sorted_table:
         prepared_node = Node(item[1])
         prepared_node.character = item[0]
         frequency_nodes.append(prepared_node)
@@ -109,11 +122,13 @@ def get_frequency_nodes(data):
 
 def huffman_decoding(data, tree):
     """
-    Return the original string calculated from the huffman tree and the binary representation.
+    Get the original string calculated from the huffman tree and the binary representation.
 
     Args:
       data(str): the binary encoded string
       tree(class:Group): the root node of the Huffman tree
+    Returns: 
+        The original decoded string
     """
     decoded_string = ""
     current = tree[0]

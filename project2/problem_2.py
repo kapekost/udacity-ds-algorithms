@@ -61,33 +61,34 @@ class fileExplorer():
         return file_list
 
 
-print("testing for testdir and files .c")
-file_explorer = fileExplorer()
+if __name__ == "__main__":
+    print("testing for testdir and files .c")
+    file_explorer = fileExplorer()
 
-assert file_explorer.find_files('.c', 'testdir') == \
-    ['testdir/subdir1/a.c', 'testdir/subdir3/subsubdir1/b.c', 'testdir/subdir5/a.c',
-        'testdir/t1.c'],  f" files: .c"
+    assert file_explorer.find_files('.c', 'testdir') == \
+        ['testdir/subdir1/a.c', 'testdir/subdir3/subsubdir1/b.c', 'testdir/subdir5/a.c',
+            'testdir/t1.c'],  f" files: .c"
 
-print("testing for testdir and files .h")
-assert file_explorer.find_files('.h', 'testdir') == \
-    ['testdir/subdir1/a.h', 'testdir/subdir3/subsubdir1/b.h', 'testdir/subdir5/a.h',
-        'testdir/t1.h'],  f" files: .h"
+    print("testing for testdir and files .h")
+    assert file_explorer.find_files('.h', 'testdir') == \
+        ['testdir/subdir1/a.h', 'testdir/subdir3/subsubdir1/b.h', 'testdir/subdir5/a.h',
+            'testdir/t1.h'],  f" files: .h"
 
-print("testing for testdir and files .a to be none")
-assert file_explorer.find_files('.', 'testdir') == \
-    [],  f" files: .h"
+    print("testing for testdir and files .a to be none")
+    assert file_explorer.find_files('.', 'testdir') == \
+        [],  f" files: .h"
 
-print("testing for testdir and empty suffix")
-assert file_explorer.find_files('', 'testdir') == \
-    None,  f" files: ''"
+    print("testing for testdir and empty suffix")
+    assert file_explorer.find_files('', 'testdir') == \
+        None,  f" files: ''"
 
-print("testing for testdir and no suffix")
-assert file_explorer.find_files(None, 'testdir') == \
-    None,  f" files: ''"
-print("testing for empty folder and .c suffix")
-assert file_explorer.find_files('.c', '') == \
-    None,  f" files: ''"
+    print("testing for testdir and no suffix")
+    assert file_explorer.find_files(None, 'testdir') == \
+        None,  f" files: ''"
+    print("testing for empty folder and .c suffix")
+    assert file_explorer.find_files('.c', '') == \
+        None,  f" files: ''"
 
-print("testing for None folder and .c suffix")
-assert file_explorer.find_files('.c', None) == \
-    None,  f" files: ''"
+    print("testing for None folder and .c suffix")
+    assert file_explorer.find_files('.c', None) == \
+        None,  f" files: ''"
