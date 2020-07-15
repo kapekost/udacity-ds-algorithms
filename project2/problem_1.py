@@ -1,38 +1,12 @@
+from collections import OrderedDict
+
+
 class LRU_Cache(object):
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.cache = {}
+        self.cache = OrderedDict()
         self.list_of_keys = []
-        pass
-
-    def dequeue(self):
-        """
-        Remove from the cache the item that is first in the list_of_keys
-        Then remove that from the list_of_keys too
-        """
-        item_to_delete = self.list_of_keys[0]
-        del self.cache[item_to_delete]
-        self.list_of_keys.remove(item_to_delete)
-        pass
-
-    def enqueue(self, key, value):
-        """
-        Add in the cache the key value pare,
-        Add the key at the end of the list_of_keys queue 
-
-        Args:
-        key: the key of the object to store (hash)
-        value: the value to cache
-        """
-        index = self.index(key)
-        self.cache[index] = value
-
-        # if we already had that key in the priority list, we remove it from the old position
-        # to have it first
-        if(index in self.list_of_keys):
-            self.list_of_keys.remove(index)
-        self.list_of_keys.append(index)
         pass
 
     def get(self, key):
@@ -46,14 +20,15 @@ class LRU_Cache(object):
         the value of the key
         -1 of the value is not found
         """
-        # if self.capacity == 0:
-        #     return -1
+        if self.capacity == 0:
+            return -1
         # Retrieve item from provided key. Return -1 if nonexistent.
         index = self.index(key)
-        if index in self.cache:
-            self.enqueue(key, self.cache[index])
-            return self.cache[index]
-        return -1
+        if index not in self.cache.values():
+            return -1
+        # to bring it back to front of the queue
+        self.cache[index] = self.cache.pop(index)
+        return self.cache[index]
 
     def index(self, value):
         """
@@ -82,13 +57,10 @@ class LRU_Cache(object):
         """
         if(key is None or value is None or self.capacity < 1):
             return
-        if self.get(key) == -1:
-            if len(self.cache) < self.capacity:
-                index = self.index(key)
-                self.enqueue(key, value)
-            else:
-                self.dequeue()
-                self.set(key, value)
+
+        if len(self.cache) >= self.capacity:
+            self.cache.popitem(last=False)
+        self.cache[self.index(key)] = value
 
         pass
 
@@ -218,4 +190,34 @@ if __name__ == "__main__":
     assert our_cache.get(1) == -1, f"in cache {our_cache.cache}"
     assert our_cache.get(3) == 3, f"in cache {our_cache.cache}"
 
+    # Test case from review
+    our_cache = LRU_Cache(5)
+    our_cache.set(1, 1)
+    our_cache.set(2, 2)
+    our_cache.set(3, 3)
+    our_cache.set(4, 4)
+    our_cache.get(1)  # returns 1
+    our_cache.get(2)  # returns 2
+    our_cache.get(9)  # returns -1
+    our_cache.set(5, 5)
+    our_cache.set(6, 6)
+    our_cache.get(3)  # returns -1 because key 3 was thrown out
+    # similar case to the tested ones, maybe the review missed the result
+    our_cache.set(7, 7)
+    assert our_cache.get(
+        4) == -1, f"removed oldest accessed element"  # 4 is thrown out
+    # add an item twice
+    our_cache = LRU_Cache(5)
+    our_cache.set(1, 1)
+    our_cache.set(2, 2)
+    our_cache.set(3, 3)
+    our_cache.set(4, 4)
+    our_cache.get(1)  # returns 1
+    our_cache.get(2)  # returns 2
+    our_cache.get(9)  # returns -1
+    our_cache.set(5, 5)
+    our_cache.set(3, 3)
+    our_cache.set(6, 6)
+    assert our_cache.get(
+        3) == 3, f"returns 3 because key 3 because it was re-entered"
     print("done")
