@@ -75,9 +75,10 @@ if __name__ == "__main__":
         our_cache.set(i, i)
 
     print("get 1, 2, 9")
-    assert [our_cache.get(1),  our_cache.get(2),  our_cache.get(9)] == [
+    result = [our_cache.get(1),  our_cache.get(2),  our_cache.get(9)]
+    assert result == [
         1, 2, -1], f"in cache {our_cache.cache}"
-    print('result: 1, 2, -1')
+    print(f"result: {result}")
 
     print("set 5 6, to hit capacity")
     our_cache.set(5, 5),
@@ -85,18 +86,24 @@ if __name__ == "__main__":
 
     print("get 3, to be -1")
     # 3 should now be wiped, we added 2 more elements and this was the last one in priority
-    assert our_cache.get(3) == -1, f"in cache {our_cache.cache}"
+    result = our_cache.get(3)
+    assert result == -1, f"in cache {our_cache.cache}"
+    print(f"result: {result}")
 
     print("it should ignore setting None values")
     our_cache.set(None, None)
 
     assert our_cache.cache == {1: 1, 2: 2, 4: 4,
                                5: 5, 6: 6}, f"in cache {our_cache.cache}"
-    assert our_cache.get(None) == -1, f"None return -1"
+    result = our_cache.get(None)
+    assert result == -1, f"None return -1"
+    print(f"result: {result}")
 
     print("insert many values and track one of them to be in the array before reaching the capacity")
     our_cache.set(100, 100)
-    assert our_cache.get(100) == 100, f"get the number to track"
+    result = our_cache.get(100)
+    assert result == 100, f"get the number to track"
+    print(f"result: {result}")
 
     for i in range(capacity-1):
         our_cache.set(i, i)
@@ -173,7 +180,7 @@ if __name__ == "__main__":
     capacity = 0
     our_cache = LRU_Cache(capacity)
 
-    print("add values")
+    print("add 4 values and get -1 for all")
     for i in range(4):
         our_cache.set(i, i)
         assert our_cache.get(i) == -1, f"in cache {our_cache.cache, i}"
@@ -182,15 +189,17 @@ if __name__ == "__main__":
     capacity = 1
     our_cache = LRU_Cache(capacity)
 
-    print("add values")
+    print("add 4 values, and retrieve them at the same time")
     for i in range(4):
         our_cache.set(i, i)
-
+    print("get -1 for all at the start of the previous set")
     assert our_cache.get(0) == -1, f"in cache {our_cache.cache}"
     assert our_cache.get(1) == -1, f"in cache {our_cache.cache}"
+    print("get 3 for get(3) since it was the latest added")
     assert our_cache.get(3) == 3, f"in cache {our_cache.cache}"
 
     # Test case from review
+    print("Test removed oldest accessed element")
     our_cache = LRU_Cache(5)
     our_cache.set(1, 1)
     our_cache.set(2, 2)
@@ -206,6 +215,8 @@ if __name__ == "__main__":
     our_cache.set(7, 7)
     assert our_cache.get(
         4) == -1, f"removed oldest accessed element"  # 4 is thrown out
+
+    print("try to re-enter an existing value and make sure it is in cache again")
     # add an item twice
     our_cache = LRU_Cache(5)
     our_cache.set(1, 1)
