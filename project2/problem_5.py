@@ -113,3 +113,4 @@ if __name__ == "__main__":
     print("call create a chain with no input")
     head, my_chain = block_chain2.create_chain("")
     assert head == None, f"the chain should not exist"
+    print("all passed")

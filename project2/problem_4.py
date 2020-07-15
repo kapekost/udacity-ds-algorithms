@@ -92,3 +92,4 @@ if __name__ == "__main__":
     print("None user string")
     assert is_user_in_group(
         None, parent) == False, f"None user string"
+    print("all passed")

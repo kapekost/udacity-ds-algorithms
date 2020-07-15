@@ -44,6 +44,12 @@ class fileExplorer():
         Returns:
         a list of paths
         """
+        if os.path.exists(path) and os.path.isfile(path):
+            if path.endswith(suffix):
+                return [path]
+            else:
+                return []
+
         try:
             directory_list = os.listdir(path)
         except FileNotFoundError as error:
@@ -93,3 +99,16 @@ if __name__ == "__main__":
     print("testing for None folder and .c suffix")
     assert file_explorer.find_files('.c', None) == \
         None,  f" files: ''"
+
+    print("testing directory to be a valid file to return")
+    path = "testdir/subdir3/subsubdir1/b.h"
+    suffix = ".h"
+    assert file_explorer.find_files(suffix, path) == [
+        "testdir/subdir3/subsubdir1/b.h"], f"direct file found"
+
+    print("testing directory to be file but not valid for our search")
+    path = "testdir/subdir3/subsubdir1/b.h"
+    suffix = ".c"
+    assert file_explorer.find_files(
+        suffix, path) == [], f"direct file missing suffix"
+    print("all passed")

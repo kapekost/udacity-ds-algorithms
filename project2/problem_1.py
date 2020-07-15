@@ -231,4 +231,4 @@ if __name__ == "__main__":
     our_cache.set(6, 6)
     assert our_cache.get(
         3) == 3, f"returns 3 because key 3 because it was re-entered"
-    print("done")
+    print("all passed")

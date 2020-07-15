@@ -2,8 +2,8 @@ import sys
 
 
 class Node():
-    def __init__(self, value):
-        self.character = None
+    def __init__(self, value, character=None):
+        self.character = character
         self.value = value
         self.left = None
         self.right = None
@@ -39,8 +39,16 @@ def encode_data(data, huffman_code):
     Returns:
         The encoded data
     """
+    # edge case of the element being in the root of the tree (single unique element)
+
     encoded_data = ""
+    # we only had one node, doesn't worth replacing it,
+    # we do so to maintain concistency for the getsizeof
+    if len(huffman_code) == 1:
+        return "0"*len(data)
+
     for char in data:
+
         encoded_data += huffman_code[char]
     return encoded_data
 
@@ -115,8 +123,7 @@ def get_frequency_nodes(data):
     # create graph with nodes
     sorted_table = sorted(frequency_table.items(), key=lambda x: x[1])
     for item in sorted_table:
-        prepared_node = Node(item[1])
-        prepared_node.character = item[0]
+        prepared_node = Node(item[1], item[0])
         frequency_nodes.append(prepared_node)
     return frequency_nodes
 
@@ -131,6 +138,10 @@ def huffman_decoding(data, tree):
     Returns: 
         The original decoded string
     """
+    # cover edge case of single unique character in decoding
+    if(not tree[0].left and not tree[0].right):
+        return tree[0].character * len(data)
+
     decoded_string = ""
     current = tree[0]
     for bit in data:
@@ -147,10 +158,10 @@ def huffman_decoding(data, tree):
 
 
 if __name__ == "__main__":
-    test_sentences = ["", None, " ", "'", "The bird is the word", "hello world", "my name is Kostas",
-                      "AAAAA0000----", "------098076543!@#$%^&*()** 32456 321@#$%^&^ ##1",
-                      "123456789qwertyuiopasdfghjklzxcvbnm"]
-    for a_great_sentence in test_sentences:
+    test_cases = ["", None, " ", "'", "The bird is the word", "hello world", "my name is Kostas",
+                  "AAAAA0000----", "------098076543!@#$%^&*()** 32456 321@#$%^&^ ##1",
+                  "123456789qwertyuiopasdfghjklzxcvbnm", "AAAAAAA"]
+    for a_great_sentence in test_cases:
         print(f"testing {a_great_sentence}")
         print("The size of the data is: {}\n".format(
             sys.getsizeof(a_great_sentence)))
@@ -170,5 +181,6 @@ if __name__ == "__main__":
             assert decoded_data == a_great_sentence, f"encoded: {a_great_sentence}"
         else:
             # The case of 1 character, None or empty string
-            assert a_great_sentence in test_sentences[0:
-                                                      4], f"edge case:{a_great_sentence}"
+            assert a_great_sentence in test_cases[0:
+                                                  4], f"edge case:{a_great_sentence}"
+    print("all passed")

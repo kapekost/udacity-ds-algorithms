@@ -293,3 +293,4 @@ if __name__ == "__main__":
     print("intersection:", intersection(linked_list_3, linked_list_4))
     # union: 1 -> 21 ->
     # intersection:
+    print("all passed")
