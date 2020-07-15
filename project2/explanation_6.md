@@ -25,13 +25,13 @@ Time:
 
 - Union:
   looping through list one to add in our set (O(n)+1) (n elements of 1st list)
-  looping through list2 and add in set (O(m)+1) (m elemenets of 2nd list)
+  looping through list2 and add in set (O(m)+1) (m elements of 2nd list)
   loop through the generated set to create and append nodes (O(k)+(O(l))) k the elements in the set, and l the size of the list where the new Node will attach at the end
   Complexity => O(n)
 
 - intersection:
   looping through list one to add in set1 (O(n)+1) (n elements of 1st list)
-  looping through list2 and add in set2 (O(m)+1) (m elemenets of 2nd list)
+  looping through list2 and add in set2 (O(m)+1) (m elements of 2nd list)
   perform Python & (O(n)) # https://wiki.python.org/moin/TimeComplexity%20%28SetCode%29
   loop through the generated set to create and append nodes (O(k)+(O(l))) k the elements in the set, and l the size of the list where the new Node will attach at the end
   Complexity => O(n)

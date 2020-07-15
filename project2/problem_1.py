@@ -46,6 +46,8 @@ class LRU_Cache(object):
         the value of the key
         -1 of the value is not found
         """
+        # if self.capacity == 0:
+        #     return -1
         # Retrieve item from provided key. Return -1 if nonexistent.
         index = self.index(key)
         if index in self.cache:
@@ -78,7 +80,7 @@ class LRU_Cache(object):
         key: the key of the object to store (hash)
         value: the value to cache
         """
-        if(key is None or value is None):
+        if(key is None or value is None or self.capacity < 1):
             return
         if self.get(key) == -1:
             if len(self.cache) < self.capacity:
@@ -194,4 +196,26 @@ if __name__ == "__main__":
     except TypeError as ex:
         exception2 = True
     assert exception2, f"exception {exception2}"
+
+    print("testing for capacity 0")
+    capacity = 0
+    our_cache = LRU_Cache(capacity)
+
+    print("add values")
+    for i in range(4):
+        our_cache.set(i, i)
+        assert our_cache.get(i) == -1, f"in cache {our_cache.cache, i}"
+
+    print("testing for capacity 1")
+    capacity = 1
+    our_cache = LRU_Cache(capacity)
+
+    print("add values")
+    for i in range(4):
+        our_cache.set(i, i)
+
+    assert our_cache.get(0) == -1, f"in cache {our_cache.cache}"
+    assert our_cache.get(1) == -1, f"in cache {our_cache.cache}"
+    assert our_cache.get(3) == 3, f"in cache {our_cache.cache}"
+
     print("done")

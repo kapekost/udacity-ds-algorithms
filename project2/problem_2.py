@@ -62,6 +62,7 @@ class fileExplorer():
 
 
 if __name__ == "__main__":
+    print("Tests start looking for subdirectory 'testdir' under the script-running directory")
     print("testing for testdir and files .c")
     file_explorer = fileExplorer()
 

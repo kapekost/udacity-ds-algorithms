@@ -26,9 +26,9 @@ Time complexity:
   O(n log(n))
 
 - pass the nodes to merge_min_nodes until we are left with one root nodes
-  for m unique letters of the string we will run this process m times (O(m^2))
-  (because in each step we need to sort again) - in every recursion we pick the first 2 nodes and create a new tree - loop through the remaining nodes to add them in the new tree to return
-  O(m^2)
+  for m unique letters of the string we will run this process m times (O(m))
+  (because in each step we need to sort again) O(n log(n)) - in every recursion we pick the first 2 nodes and create a new tree - loop through the remaining nodes to add them in the new tree to return
+  O(m) + O(n(log(n)))
 
 - Using the tree we just created, we can navigate to the leafs, which hold the letters
   The path to the leaf is the one we need to use to represent the letter that lives in the leaf
@@ -39,9 +39,9 @@ Time complexity:
   that we got from the previous step, respectively
   O(n) n is the size of the string we want to encode
 
-O(n log(n)) + O(m^2) + O(log(n)) + O(n) if all the letters are different m == n
+O(n log(n)) + O(m) + O(n(log(n))) + O(log(n)) + O(n) for all the letters are different m == n
 
-Complexity => O(n^2)
+Complexity => O(n\*log(n))
 
 # Decoding Huffman
 
